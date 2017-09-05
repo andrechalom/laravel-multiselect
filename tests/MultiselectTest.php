@@ -68,7 +68,7 @@ class MultiselectTest extends TestCase
     {
         $select = new Multiselect();
         $element = $select->select('name', [], [], [], [], [], true);
-        $this->assertSame('<select id="name-ms"><option value="">&nbsp;</option></select>', $element);
+        $this->assertSame('<select id="name-ms" class="multiselect"><option value="">&nbsp;</option></select>', $element);
     }
 
     public function testSelectClass()
@@ -82,13 +82,13 @@ class MultiselectTest extends TestCase
     {
         $select = new Multiselect();
         $element = $select->select('name', $this->basicList, [], [], [], [], true);
-        $this->assertSame('<select id="name-ms"><option value="">&nbsp;</option><option value="0">Zero</option><option value="1">One</option><option value="2">Two</option></select>', $element);
+        $this->assertSame('<select id="name-ms" class="multiselect"><option value="">&nbsp;</option><option value="0">Zero</option><option value="1">One</option><option value="2">Two</option></select>', $element);
     }
 
     public function testSelectWithSpan()
     {
         $select = new Multiselect();
         $element = $select->select('name');
-        $this->assertSame('<span id="name-span"></span><select id="name-ms"><option value="">&nbsp;</option></select>', $element);
+        $this->assertSame('<span id="name-span"></span><select id="name-ms" class="multiselect"><option value="">&nbsp;</option></select>', $element);
     }
 }

@@ -43,25 +43,32 @@ Register provider and facade on your config/app.php file.
 // ]
 ```
 
-### Configuration (Optional)
+### Javascript Configuration
 
-TODO: add the js here
-```
-$ php artisan vendor:publish --provider=AndreChalom\LaravelMultiselect\MultiselectServiceProvider
+The jQuery code required by this package is in the file multiselect.js. If you use Laravel Mix, you can include it
+in your mix.js. Otherwise, copy it to your public folder and source it directly in the app layout. 
+Remember to do it after you include jquery.
+
+Example:
+
+```js
+mix.js([
+    'resources/assets/js/app.js',
+    'vendor/andrechalom/laravel-multiselect/resources/assets/js/multiselect.js',
+    ], 'public/js')
+   .sass('resources/assets/sass/app.scss', 'public/css');
 ```
 
 ## Usage
 
-- (1) Usage in Views, explain list, selected etc with pluck, setting classes etc
+- (1) Usage in Views, explain list, selected etc with pluck, setting classes WITH WARNING
 ``` php
 $skeleton = new League\Skeleton();
 echo $skeleton->echoPhrase('Hello, League!');
 ```
 - (2) small example in controller, how to retrieve the data (and sync to model)
 
-- (3) js
-
-- (4) style: the span elements generated with Multiselect are of the "multiselector" css class. You can style them as you like, for instance
+- (3) style: the span elements generated with Multiselect are of the "multiselector" css class. You can style them as you like, for instance
 
 ```css
 .multiselector { display: inline-block; border: 1px dashed; padding: 2px; margin: 5px; cursor: pointer; }
@@ -85,6 +92,10 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) and [CODE_OF_CONDUCT](CODE_OF_CONDUCT
 ## Security
 
 If you discover any security related issues, please email andrechalom@gmail.com instead of using the issue tracker.
+
+## Credits
+
+The idea behind the Multiselect is based on an article by [Michał Wojciechowski](http://odyniec.net/articles/multiple-select-fields/). This library reuses some code from Laravel Collective [HTML](https://github.com/LaravelCollective/html/).
 
 ## License
 

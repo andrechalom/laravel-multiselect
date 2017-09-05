@@ -140,6 +140,8 @@ class Multiselect
     ) {
         // Forces the ID attribute
         $selectAttributes['id'] = $name . "-ms";
+        if (!isset($selectAttributes['class']))
+            $selectAttributes['class'] = "multiselect";
 
         // We will concatenate the span html unless $selectOnly is passed as false
         $spanHtml = $selectOnly ? "" : $this->span($name, $list, $selected, $spanAttributes);
