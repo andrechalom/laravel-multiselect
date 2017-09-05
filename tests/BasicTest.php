@@ -37,7 +37,7 @@ class BasicTest extends TestCase
     {
         $select = new Multiselect();
         $element = $select->span('name', $this->basicList, [0]);
-        $this->assertSame('<span id="name-span"><span onClick="$(this).remove();"><input type="hidden" name="name[]" value="0>Zero</span></span>', $element);
+        $this->assertSame('<span id="name-span"><span onClick="$(this).remove();"><input type="hidden" name="name[]" value="0">Zero</span></span>', $element);
     }
     public function testSelectEmpty()
     {

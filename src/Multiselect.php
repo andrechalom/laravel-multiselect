@@ -185,7 +185,7 @@ class Multiselect
         $options = ['onClick' => '$(this).remove();' ] + $attributes;
         return $this->toHtmlString(
             '<span' . $this->attributes($options) . '>'.
-            '<input type="hidden" name="' . $name . '[]" value="' . $value . '>'
+            '<input type="hidden" name="' . $name . '[]" value="' . $value . '">'
             . e($display) . 
             '</span>');
     }
