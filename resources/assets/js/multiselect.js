@@ -12,9 +12,9 @@ $(document).ready(function(){
             var $span = $("#" + $name + "-span");
             if ( $(this).val() === "") return;
             if ($span.find('input[value=' + $(this).val() + ']').length == 0)
-                $span.append('<span class="mspantipleSelector" onclick="$(this).remove();">' +
+                $span.append('<span class="multiselector" onclick="$(this).remove();">' +
                     '<input type="hidden" name="' + $name + '[]" value="' +
                     $(this).val() + '" /> ' +
                     $(this).find('option:selected').text() + '</span>');
         });
-}
+});

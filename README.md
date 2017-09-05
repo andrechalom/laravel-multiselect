@@ -66,6 +66,10 @@ mix.js([
 $skeleton = new League\Skeleton();
 echo $skeleton->echoPhrase('Hello, League!');
 ```
+
+If you decide to change the select element class, append "multiselect" to the class definition, or the Javascript code
+won't work. Example: `['class' => 'form-control multiselect'].
+
 - (2) small example in controller, how to retrieve the data (and sync to model)
 
 - (3) style: the span elements generated with Multiselect are of the "multiselector" css class. You can style them as you like, for instance
