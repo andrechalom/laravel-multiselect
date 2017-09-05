@@ -11,52 +11,80 @@
 
 namespace AndreChalom\LaravelMultiselect\Test;
 
-use PHPUnit\Framework\TestCase;
 use AndreChalom\LaravelMultiselect\Multiselect;
+use PHPUnit\Framework\TestCase;
+use Illuminate\Http\Request;
 
-class BasicTest extends TestCase
+class MultiselectTest extends TestCase
 {
     protected $basicList = [
         0 => 'Zero',
         1 => 'One',
         2 => 'Two',
     ];
+
+    /////////////////////////////////////////////
+    //  Tests for generating the span element  //
+    // Tests for generating the select element //
+    /////////////////////////////////////////////
     public function testSpanEmpty()
     {
         $select = new Multiselect();
         $element = $select->span('name');
         $this->assertSame('<span id="name-span"></span>', $element);
     }
+
     public function testSpanClass()
     {
         $select = new Multiselect();
         $element = $select->span('name', [], [], ['class' => 'prettySpan']);
         $this->assertSame('<span class="prettySpan" id="name-span"></span>', $element);
     }
+
     public function testSpanList()
     {
         $select = new Multiselect();
         $element = $select->span('name', $this->basicList, [0]);
-        $this->assertSame('<span id="name-span"><span onClick="$(this).remove();"><input type="hidden" name="name[]" value="0">Zero</span></span>', $element);
+        $this->assertSame('<span id="name-span"><span onClick="$(this).remove();" class="multiselector"><input type="hidden" name="name[]" value="0">Zero</span></span>', $element);
     }
+
+    public function testSpanFromRequest()
+    {
+        $request = Request::create('/foo', 'GET', [
+            "multiselect" => [0, 1],
+        ]);
+        $request = Request::createFromBase($request);
+        $select = new Multiselect(null, $request);
+        $element = $select->span('multiselect', $this->basicList, [2]);
+        $this->assertSame('<span id="multiselect-span"><span onClick="$(this).remove();" class="multiselector"><input type="hidden" name="multiselect[]" value="0">Zero</span><span onClick="$(this).remove();" class="multiselector"><input type="hidden" name="multiselect[]" value="1">One</span></span>', $element);
+    }
+
+    // TODO: how to test old values?
+
+    /////////////////////////////////////////////
+    // Tests for generating the select element //
+    /////////////////////////////////////////////
     public function testSelectEmpty()
     {
         $select = new Multiselect();
-        $element = $select->select('name', [], [], [], [], [], [] , true);
+        $element = $select->select('name', [], [], [], [], [], true);
         $this->assertSame('<select id="name-ms"><option value="">&nbsp;</option></select>', $element);
     }
+
     public function testSelectClass()
     {
         $select = new Multiselect();
-        $element = $select->select('name', [], [], ['class' => 'prettySelect'], [], [], [] , true);
+        $element = $select->select('name', [], [], ['class' => 'prettySelect'], [], [], true);
         $this->assertSame('<select class="prettySelect" id="name-ms"><option value="">&nbsp;</option></select>', $element);
     }
+
     public function testSelectList()
     {
         $select = new Multiselect();
-        $element = $select->select('name', $this->basicList, [], [], [], [], [] , true);
+        $element = $select->select('name', $this->basicList, [], [], [], [], true);
         $this->assertSame('<select id="name-ms"><option value="">&nbsp;</option><option value="0">Zero</option><option value="1">One</option><option value="2">Two</option></select>', $element);
     }
+
     public function testSelectWithSpan()
     {
         $select = new Multiselect();

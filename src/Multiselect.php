@@ -10,29 +10,47 @@
  */
 
 namespace AndreChalom\LaravelMultiselect;
+
 use Illuminate\Support\HtmlString;
+use Illuminate\Http\Request;
+use Illuminate\Contracts\Session\Session;
 
 class Multiselect
 {
-
-    // The select elements registered, to create the JS
-    protected $registered = [];
+    protected $session;
+    protected $request;
 
     /**
-     * Create a new Multiselect instance
+     * Create a new Multiselect instance. This method expects both a session and a request arguments, in order to be able to look up "old" values
      */
-    public function __construct()
+    public function __construct(Session $session = null, Request $request = null)
     {
-        // constructor body. Do we need to register the session / request here?
+        $this->session = $session;
+        $this->request = $request;
     }
 
-    protected function register($name) {
-        $this->registered[] = $name;
+    protected function getValueArray($name, $value = null)
+    {
+        // Looks for the values in "old"
+        if (! $this->oldInputIsEmpty()) {
+            return $this->session->getOldInput($name);
+        }
+        // Looks for the values in the Request
+        if (isset($this->request) and $this->request->input($name)) {
+            return $this->request->input($name);
+        }
+        // Returns the default value
+        return $value;
     }
 
-  /**
+    public function oldInputIsEmpty()
+    {
+        return (is_null($this->session) or count($this->session->getOldInput()) == 0);
+    }
+
+    /**
      * Build a single attribute element.
-   * Cloned from LaravelCollective\html
+     * Cloned from LaravelCollective\html
      *
      * @param string $key
      * @param string $value
@@ -75,8 +93,10 @@ class Multiselect
                 $html[] = $element;
             }
         }
+
         return count($html) > 0 ? ' ' . implode(' ', $html) : '';
     }
+
      /**
      * Transform the string to an Html serializable object
      *
@@ -93,6 +113,7 @@ class Multiselect
     protected function option($display, $value, array $attributes = [])
     {
         $options = ['value' => $value ] + $attributes;
+
         return $this->toHtmlString('<option' . $this->attributes($options) . '>' . e($display) . '</option>');
     }
 
@@ -115,17 +136,13 @@ class Multiselect
         array $selectAttributes = [],
         array $optionsAttributes = [],
         array $spanAttributes = [],
-        array $spanElementsAttributes = [],
         $selectOnly = false
     ) {
-        // Register this name in order to create the JS code
-        $this->register($name);
-
         // Forces the ID attribute
         $selectAttributes['id'] = $name . "-ms";
 
         // We will concatenate the span html unless $selectOnly is passed as false
-        $spanHtml = $selectOnly ? "" : $this->span($name, $list, $selected, $spanAttributes, $spanElementsAttributes);
+        $spanHtml = $selectOnly ? "" : $this->span($name, $list, $selected, $spanAttributes);
 
         // Here, we generate the list of options
         $html = [];
@@ -142,8 +159,10 @@ class Multiselect
         $list = implode('', $html);
 
         $selectAttributes = $this->attributes($selectAttributes);
+
         return $spanHtml . "<select{$selectAttributes}>{$list}</select>";
     }
+
     /**
      * Create the multi-select span with the already selected values.
      * This method is called from Multiselect::select by default, but you may wish to call it elsewhere in your html.
@@ -160,9 +179,8 @@ class Multiselect
     public function span(
         $name,
         $list = [],
-        $selected = [],
+        $default = [],
         array $spanAttributes = [],
-        array $spanElementsAttributes = [],
         $selectOnly = false
     ) {
         // Forces the ID attribute
@@ -170,34 +188,26 @@ class Multiselect
 
         // Here, we generate the list of already selected options IF THERE'S NO "OLD"
         $html = [];
+        $selected = $this->getValueArray($name, $default);
         foreach ($selected as $value) {
-            $elementAttributes = isset($spanElementsAttributes[$value]) ? $spanElementsAttributes[$value] : [];
-            $html[] = $this->spanElement($name, $list[$value], $value, $elementAttributes);
+            $html[] = $this->spanElement($name, $list[$value], $value);
         }
 
         $spanAttributes = $this->attributes($spanAttributes);
         $list = implode('', $html);
+
         return "<span{$spanAttributes}>{$list}</span>";
     }
 
     // generates a single span with relevant options and code
-    public function spanElement($name, $display, $value, $attributes) {
-        $options = ['onClick' => '$(this).remove();' ] + $attributes;
+    public function spanElement($name, $display, $value)
+    {
+        $options = ['onClick' => '$(this).remove();', 'class' => 'multiselector' ];
+
         return $this->toHtmlString(
             '<span' . $this->attributes($options) . '>'.
             '<input type="hidden" name="' . $name . '[]" value="' . $value . '">'
-            . e($display) . 
+            . e($display) .
             '</span>');
     }
-
-    /** 
-     * Create the jQuery code to add the selected values to the display and to remove the selected values on click
-     * Must be called AFTER all instances of Multiselect::select
-     *
-     * @return \Illuminate\Support\HtmlString
-     */
-    public function js() {
-        echo implode(",",$this->registered);
-    }
-
 }
