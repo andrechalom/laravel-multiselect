@@ -18,31 +18,19 @@ class MultiselectServiceProvider extends ServiceProvider
     protected $defer = true;
 
     /**
-     * Perform post-registration booting of services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-    }
-
-    /**
      * Register the package services.
      *
      * @return void
      */
     public function register()
     {
-        $this->app->singleton(Multiselect::class, function ($app) {
+        $this->app->singleton('multiselect', function ($app) {
             return new Multiselect($app['session.store'], $app['request']);
         });
-
-        $this->app->alias('multiselect', Multiselect::class);
     }
 
     public function provides()
     {
-        return [Multiselect::class];
+        return ['multiselect'];
     }
 }

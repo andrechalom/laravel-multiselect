@@ -27,9 +27,9 @@ Via Composer (when on Packagist)
 $ composer require andrechalom/laravel-multiselect
 ```
 
-### Service Provider & Facade (Optional on Laravel 5.5)
+### Service Provider & Facade
 
-Register provider and facade on your config/app.php file.
+Register provider and facade on your config/app.php file. This is necessary for Laravel 5.4, but optional for >= 5.5.
 
 ```php
 'providers' => [
@@ -37,10 +37,10 @@ Register provider and facade on your config/app.php file.
     AndreChalom\LaravelMultiselect\MultiselectServiceProvider::class,
 ]
 
-// 'aliases' => [ // is this needed???
-//    ...,
-//    'Multiselect' => AndreChalom\LaravelMultiselect\MultiselectFacade::class,
-// ]
+ 'aliases' => [ 
+    ...,
+    'Multiselect' => AndreChalom\LaravelMultiselect\MultiselectFacade::class,
+ ]
 ```
 
 ### Javascript Configuration
@@ -61,16 +61,44 @@ mix.js([
 
 ## Usage
 
-- (1) Usage in Views, explain list, selected etc with pluck, setting classes WITH WARNING
+- (1) The default behavior creates a select element with an area where the selected options are placed. 
+Use any key => value array to populate the select.
+
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+$list = [
+    'r' => 'red',
+    'g' => 'green',
+    'b' => 'blue',
+];
+
+{!! Multiselect::select('colors', $list) !!}
 ```
+
+To provide initial selected options, pass a list of keys as the third argument. All keys in this argument are supposed
+to be in the options list:
+
+``` php
+{!! Multiselect::select('colors', $list, ['r', 'b']) !!}
+```
+
+This can be populated from Eloquent models:
+
+``` php
+{!! Multiselect::select('colors', Colors::all()->pluck('name', 'id'), $person->favoriteColors()->pluck('id')) !!}
+```
+
+TODO: explain how to generate the span separately; setting attributes for select, options, span.
 
 If you decide to change the select element class, append "multiselect" to the class definition, or the Javascript code
 won't work. Example: `['class' => 'form-control multiselect'].
 
-- (2) small example in controller, how to retrieve the data (and sync to model)
+- (2) In the Controller, the selected options will be in a array. 
+```php
+public function update(Request $request, $id) {
+    ...
+    $person->favoriteColors()->sync($request->colors);
+}
+```
 
 - (3) style: the span elements generated with Multiselect are of the "multiselector" css class. You can style them as you like, for instance
 
