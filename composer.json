@@ -28,12 +28,12 @@
     },
     "autoload": {
         "psr-4": {
-            "andrechalom\\laravel-multiselect\\": "src"
+            "AndreChalom\\LaravelMultiselect\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "andrechalom\\laravel-multiselect\\": "tests"
+            "AndreChalom\\LaravelMultiselect\\": "tests"
         }
     },
     "scripts": {
