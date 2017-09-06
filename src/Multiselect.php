@@ -40,7 +40,7 @@ class Multiselect
             return $this->request->input($name);
         }
         // Returns the default value
-        return $value;
+        return empty($value) ? [] : $value;
     }
 
     public function oldInputIsEmpty()
@@ -188,7 +188,7 @@ class Multiselect
         // Forces the ID attribute
         $spanAttributes['id'] = $name . "-span";
 
-        // Here, we generate the list of already selected options IF THERE'S NO "OLD"
+        // Here, we generate the list of already selected options considering "old" values
         $html = [];
         $selected = $this->getValueArray($name, $default);
         foreach ($selected as $value) {

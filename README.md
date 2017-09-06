@@ -84,10 +84,18 @@ to be in the options list:
 This can be populated from Eloquent models:
 
 ``` php
-{!! Multiselect::select('colors', Colors::all()->pluck('name', 'id'), $person->favoriteColors()->pluck('id')) !!}
+{!! Multiselect::select(
+    'colors', 
+    Colors::all()->pluck('name', 'id'), 
+    isset($person) ? $person->favoriteColors()->pluck('id') : []
+) !!}
 ```
 
 TODO: explain how to generate the span separately; setting attributes for select, options, span.
+TODO: document placeholder
+TODO: maybe some helper to "auto" pluck?
+TODO: maybe some helper to set a single default? 
+TODO: include something to catch "undefined offsets"?
 
 If you decide to change the select element class, append "multiselect" to the class definition, or the Javascript code
 won't work. Example: `['class' => 'form-control multiselect'].
@@ -133,17 +141,15 @@ The idea behind the Multiselect is based on an article by [Michał Wojciechowski
 
 This work is licensed under the GNU Public License. Please see [License File](LICENSE) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/:vendor/:package_name.svg?style=flat-square
-[ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/:vendor/:package_name/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/:vendor/:package_name.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/:vendor/:package_name.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/:vendor/:package_name.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/andrechalom/laravel-multiselect.svg
+[ico-license]: https://img.shields.io/badge/license-GPLv3-brightgreen.svg
+[ico-travis]: https://img.shields.io/travis/andrechalom/laravel-multiselect/master.svg
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/andrechalom/laravel-multiselect.svg
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/andrechalom/laravel-multiselect.svg
+[ico-downloads]: https://img.shields.io/packagist/dt/andrechalom/laravel-multiselect.svg
 
-[link-packagist]: https://packagist.org/packages/:vendor/:package_name
-[link-travis]: https://travis-ci.org/:vendor/:package_name
-[link-scrutinizer]: https://scrutinizer-ci.com/g/:vendor/:package_name/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/:vendor/:package_name
-[link-downloads]: https://packagist.org/packages/:vendor/:package_name
-[link-author]: https://github.com/:author_username
-[link-contributors]: ../../contributors
+[link-packagist]: https://packagist.org/packages/andrechalom/laravel-multiselect
+[link-travis]: https://travis-ci.org/andrechalom/laravel-multiselect
+[link-scrutinizer]: https://scrutinizer-ci.com/g/andrechalom/laravel-multiselect/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/andrechalom/laravel-multiselect
+[link-downloads]: https://packagist.org/packages/andrechalom/laravel-multiselect
