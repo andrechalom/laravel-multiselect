@@ -142,7 +142,7 @@ class Multiselect
      *
      * @param  string  $name The name of the select element. Will be used by the JS to add hidden inputs
      * @param  array   $list A Laravel collection or list of key => values
-     * @param  string  $selected A laravel collection or list of keys
+     * @param  array   $selected A laravel collection or list of keys
      * @param  array   $selectAttributes
      * @param  array   $optionsAttributes
      * @param  array   $spanAttributes
@@ -194,7 +194,7 @@ class Multiselect
      *
      * @param  string $name The name of the select element. Will be used by the JS to add elements under this
      * @param  array  $list A Laravel collection or list of elements
-     * @param  string $default A laravel collection or list of elements
+     * @param  array  $default A laravel collection or list of elements
      * @param  array  $spanAttributes
      *
      * @return \Illuminate\Support\HtmlString

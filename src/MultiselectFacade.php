@@ -14,7 +14,7 @@ namespace AndreChalom\LaravelMultiselect;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @see \Collective\Html\FormBuilder
+ * @codeCoverageIgnore
  */
 class MultiselectFacade extends Facade
 {

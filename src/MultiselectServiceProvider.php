@@ -13,6 +13,9 @@ namespace AndreChalom\LaravelMultiselect;
 
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 class MultiselectServiceProvider extends ServiceProvider
 {
     protected $defer = true;
