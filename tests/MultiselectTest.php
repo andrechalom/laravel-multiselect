@@ -30,21 +30,21 @@ class MultiselectTest extends TestCase
     public function testSpanEmpty()
     {
         $select = new Multiselect();
-        $element = $select->span('name');
+        $element = $select->span('name')->toHtml();
         $this->assertSame('<span id="name-span"></span>', $element);
     }
 
     public function testSpanClass()
     {
         $select = new Multiselect();
-        $element = $select->span('name', [], [], ['class' => 'prettySpan']);
+        $element = $select->span('name', [], [], ['class' => 'prettySpan'])->toHtml();
         $this->assertSame('<span class="prettySpan" id="name-span"></span>', $element);
     }
 
     public function testSpanList()
     {
         $select = new Multiselect();
-        $element = $select->span('name', $this->basicList, [0]);
+        $element = $select->span('name', $this->basicList, [0])->toHtml();
         $this->assertSame('<span id="name-span"><span onClick="$(this).remove();" class="multiselector"><input type="hidden" name="name[]" value="0">Zero</span></span>', $element);
     }
 
@@ -55,7 +55,7 @@ class MultiselectTest extends TestCase
         ]);
         $request = Request::createFromBase($request);
         $select = new Multiselect(null, $request);
-        $element = $select->span('multiselect', $this->basicList, [2]);
+        $element = $select->span('multiselect', $this->basicList, [2])->toHtml();
         $this->assertSame('<span id="multiselect-span"><span onClick="$(this).remove();" class="multiselector"><input type="hidden" name="multiselect[]" value="0">Zero</span><span onClick="$(this).remove();" class="multiselector"><input type="hidden" name="multiselect[]" value="1">One</span></span>', $element);
     }
 
@@ -67,28 +67,28 @@ class MultiselectTest extends TestCase
     public function testSelectEmpty()
     {
         $select = new Multiselect();
-        $element = $select->select('name', [], [], [], [], [], true);
+        $element = $select->select('name', [], [], [], [], [], true)->toHtml();
         $this->assertSame('<select id="name-ms" class="multiselect"><option value="">&nbsp;</option></select>', $element);
     }
 
     public function testSelectClass()
     {
         $select = new Multiselect();
-        $element = $select->select('name', [], [], ['class' => 'prettySelect'], [], [], true);
+        $element = $select->select('name', [], [], ['class' => 'prettySelect'], [], [], true)->toHtml();
         $this->assertSame('<select class="prettySelect" id="name-ms"><option value="">&nbsp;</option></select>', $element);
     }
 
     public function testSelectList()
     {
         $select = new Multiselect();
-        $element = $select->select('name', $this->basicList, [], [], [], [], true);
+        $element = $select->select('name', $this->basicList, [], [], [], [], true)->toHtml();
         $this->assertSame('<select id="name-ms" class="multiselect"><option value="">&nbsp;</option><option value="0">Zero</option><option value="1">One</option><option value="2">Two</option></select>', $element);
     }
 
     public function testSelectWithSpan()
     {
         $select = new Multiselect();
-        $element = $select->select('name');
+        $element = $select->select('name')->toHtml();
         $this->assertSame('<span id="name-span"></span><select id="name-ms" class="multiselect"><option value="">&nbsp;</option></select>', $element);
     }
 }

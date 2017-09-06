@@ -1,3 +1,5 @@
 vendor/
 .php_cs.cache
 *.swp
+composer.lock
+cloverfile.xml

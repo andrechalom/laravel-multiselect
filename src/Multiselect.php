@@ -29,6 +29,17 @@ class Multiselect
         $this->request = $request;
     }
 
+    /** Gets the array of values that must be set on page load. In order, these are:
+     * 1 - "old" session values
+     * 2 - $request values
+     * 3 - default values, passed as $selected
+     * 4 - empty array
+     *
+     * @param string $key
+     * @param array $value
+     *
+     * @return array
+     */
     protected function getValueArray($name, $value = null)
     {
         // Looks for the values in "old"
@@ -109,7 +120,15 @@ class Multiselect
         return new HtmlString($html);
     }
 
-    /** Generates a single option for the select dropdown */
+    /**
+     * Generates a single option for the select dropdown
+     *
+     * @param string $display
+     * @param string $value
+     * @param array $attributes
+     *
+     * @return \Illuminate\Support\HtmlString
+     * */
     protected function option($display, $value, array $attributes = [])
     {
         $options = ['value' => $value ] + $attributes;
@@ -121,11 +140,13 @@ class Multiselect
      * Create the multi-select select box field and optionally the already selected span field.
      * This method interface mimicks LaravelCollective\html select method.
      *
-     * @param  string $name The name of the select element. Will be used by the JS to add onChange handler
-     * @param  array  $list A Laravel collection or list of elements
-     * @param  string $selected A laravel collection or list of elements
-     * @param  array  $selectAttributes
-     * @param  array  $optionsAttributes
+     * @param  string  $name The name of the select element. Will be used by the JS to add hidden inputs
+     * @param  array   $list A Laravel collection or list of key => values
+     * @param  string  $selected A laravel collection or list of keys
+     * @param  array   $selectAttributes
+     * @param  array   $optionsAttributes
+     * @param  array   $spanAttributes
+     * @param  boolean $selectOnly
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -140,8 +161,9 @@ class Multiselect
     ) {
         // Forces the ID attribute
         $selectAttributes['id'] = $name . "-ms";
-        if (!isset($selectAttributes['class']))
+        if (!isset($selectAttributes['class'])) {
             $selectAttributes['class'] = "multiselect";
+        }
 
         // We will concatenate the span html unless $selectOnly is passed as false
         $spanHtml = $selectOnly ? "" : $this->span($name, $list, $selected, $spanAttributes);
@@ -162,7 +184,7 @@ class Multiselect
 
         $selectAttributes = $this->attributes($selectAttributes);
 
-        return $spanHtml . "<select{$selectAttributes}>{$list}</select>";
+        return $this->toHtmlString($spanHtml . "<select{$selectAttributes}>{$list}</select>");
     }
 
     /**
@@ -172,9 +194,8 @@ class Multiselect
      *
      * @param  string $name The name of the select element. Will be used by the JS to add elements under this
      * @param  array  $list A Laravel collection or list of elements
-     * @param  string $selected A laravel collection or list of elements
-     * @param  array  $selectAttributes
-     * @param  array  $optionsAttributes
+     * @param  string $default A laravel collection or list of elements
+     * @param  array  $spanAttributes
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -182,8 +203,7 @@ class Multiselect
         $name,
         $list = [],
         $default = [],
-        array $spanAttributes = [],
-        $selectOnly = false
+        array $spanAttributes = []
     ) {
         // Forces the ID attribute
         $spanAttributes['id'] = $name . "-span";
@@ -198,10 +218,18 @@ class Multiselect
         $spanAttributes = $this->attributes($spanAttributes);
         $list = implode('', $html);
 
-        return "<span{$spanAttributes}>{$list}</span>";
+        return $this->toHtmlString("<span{$spanAttributes}>{$list}</span>");
     }
 
-    // generates a single span with relevant options and code
+    /**
+     * Generates a single span with pre-selected options with relevant options
+     *
+     * @param string $name
+     * @param string $display
+     * @param string $value
+     *
+     * @return \Illuminate\Support\HtmlString
+     * */
     public function spanElement($name, $display, $value)
     {
         $options = ['onClick' => '$(this).remove();', 'class' => 'multiselector' ];

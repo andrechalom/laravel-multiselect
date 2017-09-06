@@ -1,0 +1,11 @@
+language: php
+
+tests: true
+build:
+    tests:
+        override:
+            -
+                command: 'vendor/bin/phpunit --coverage-clover=cloverfile.xml'
+                coverage:
+                    file: 'cloverfile.xml'
+                    format: 'clover'

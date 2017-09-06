@@ -10,11 +10,14 @@ $(document).ready(function(){
             var $name = $(this).attr('id');
             $name = $name.substring(0, $name.length-3);
             var $span = $("#" + $name + "-span");
-            if ( $(this).val() === "") return;
-            if ($span.find('input[value=' + $(this).val() + ']').length == 0)
+            if ( $(this).val() === "") {
+                return;
+            }
+            if ($span.find('input[value=' + $(this).val() + ']').length == 0) {
                 $span.append('<span class="multiselector" onclick="$(this).remove();">' +
                     '<input type="hidden" name="' + $name + '[]" value="' +
                     $(this).val() + '" /> ' +
                     $(this).find('option:selected').text() + '</span>');
+            }
         });
 });
