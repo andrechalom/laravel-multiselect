@@ -43,8 +43,12 @@ class Multiselect
     protected function getValueArray($name, $value = null)
     {
         // Looks for the values in "old"
-        if (! $this->oldInputIsEmpty()) {
-            return $this->session->getOldInput($name);
+        if (!$this->oldInputIsEmpty()) {
+            if (is_null($this->session->getOldInput($name))) { // we have old input, but none for this name
+                return [];
+            } else {
+                return $this->session->getOldInput($name);
+            }
         }
         // Looks for the values in the Request
         if (isset($this->request) and $this->request->input($name)) {
