@@ -14,7 +14,6 @@ namespace AndreChalom\LaravelMultiselect;
 use Illuminate\Support\HtmlString;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Session\Session;
-use AndreChalom\LaravelMultiselect\MultiselectException;
 
 class Multiselect
 {
@@ -216,10 +215,10 @@ class Multiselect
         $selected = $this->getValueArray($name, $default);
         foreach ($selected as $value) {
             // This block avoids Undefined Offsets
-            if ( isset($list[$value]) ) {
+            if (isset($list[$value])) {
                 $html[] = $this->spanElement($name, $list[$value], $value);
             } else { // Undefined offset! What to do now depends on the value of parameter $strict
-                if ( $strict ) {
+                if ($strict) {
                     throw new MultiselectException("Undefined offset $value!");
                 } else {
                     $html[] = $this->spanElement($name, "Undefined", $value);
