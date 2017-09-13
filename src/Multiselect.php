@@ -14,6 +14,7 @@ namespace AndreChalom\LaravelMultiselect;
 use Illuminate\Support\HtmlString;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Session\Session;
+use AndreChalom\LaravelMultiselect\MultiselectException;
 
 class Multiselect
 {
@@ -196,6 +197,7 @@ class Multiselect
      * @param  array  $list A Laravel collection or list of elements
      * @param  array  $default A laravel collection or list of elements
      * @param  array  $spanAttributes
+     * @param  bool   $strict If true, will throw a Undefined Offset exception in case a value in $default is not present in $list. If false, the item is generated with an "Undefined" label
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -203,7 +205,8 @@ class Multiselect
         $name,
         $list = [],
         $default = [],
-        array $spanAttributes = []
+        array $spanAttributes = [],
+        $strict = false
     ) {
         // Forces the ID attribute
         $spanAttributes['id'] = $name . "-span";
@@ -212,7 +215,16 @@ class Multiselect
         $html = [];
         $selected = $this->getValueArray($name, $default);
         foreach ($selected as $value) {
-            $html[] = $this->spanElement($name, $list[$value], $value);
+            // This block avoids Undefined Offsets
+            if ( isset($list[$value]) ) {
+                $html[] = $this->spanElement($name, $list[$value], $value);
+            } else { // Undefined offset! What to do now depends on the value of parameter $strict
+                if ( $strict ) {
+                    throw new MultiselectException("Undefined offset $value!");
+                } else {
+                    $html[] = $this->spanElement($name, "Undefined", $value);
+                }
+            }
         }
 
         $spanAttributes = $this->attributes($spanAttributes);

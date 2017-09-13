@@ -59,9 +59,9 @@ mix.js([
    .sass('resources/assets/sass/app.scss', 'public/css');
 ```
 
-## Usage
+## Basic Usage
 
-- (1) The default behavior creates a select element with an area where the selected options are placed. 
+(1) The default behavior creates a select element with an area where the selected options are placed. 
 Use any key => value array to populate the select.
 
 ``` php
@@ -75,7 +75,7 @@ $list = [
 ```
 
 To provide initial selected options, pass a list of keys as the third argument. All keys in this argument are supposed
-to be in the options list:
+to be in the options list (but see "Advanced usage" below):
 
 ``` php
 {!! Multiselect::select('colors', $list, ['r', 'b']) !!}
@@ -91,28 +91,65 @@ This can be populated from Eloquent models:
 ) !!}
 ```
 
-TODO: explain how to generate the span separately; setting attributes for select, options, span.
-TODO: document placeholder
-TODO: maybe some helper to "auto" pluck?
-TODO: maybe some helper to set a single default? 
-TODO: include something to catch "undefined offsets"?
-
-If you decide to change the select element class, append "multiselect" to the class definition, or the Javascript code
-won't work. Example: `['class' => 'form-control multiselect'].
-
-- (2) In the Controller, the selected options will be in a array. 
+(2) In the Controller, the selected options will be in a array. 
 ```php
 public function update(Request $request, $id) {
     ...
+    $this->validate(['colors' => 'array']);
     $person->favoriteColors()->sync($request->colors);
 }
 ```
 
-- (3) style: the span elements generated with Multiselect are of the "multiselector" css class. You can style them as you like, for instance
+(3) style: the span elements generated with Multiselect are of the "multiselector" css class. You can style them as you like, for instance
 
 ```css
 .multiselector { display: inline-block; border: 1px dashed; padding: 2px; margin: 5px; cursor: pointer; }
 .multiselector:after { font-family: "Glyphicons Halflings"; content: "\e014"; padding-left: 3px; }
+```
+
+If would like to change the class or other HTML attributes of the select, option or span elements generated, use the
+following arguments:
+
+``` php
+{!! Multiselect::select(
+    'colors', 
+    $colors, 
+    $default_colors,
+    ['class' => 'select-class multiselect'],
+    [['class' => 'option1-class', 'class' => 'option2-class']],
+    ['class' => 'span-class']
+) !!}
+```
+
+Note that the argument for options excepts an array with the same size of the `$list` parameter. Also note that
+if you change the select class, you must append "multiselect" or the Javascript code won't work.
+
+## Advanced usage
+
+(1) A more advanced usage involves generating the `select` and `span` elements separately. To do so, use the `$selectOnly`
+argument on the `select` function.
+
+```php
+{!! Multiselect::select( 'colors', $colors, $default_colors, [], [], [], true) !!}
+# ... somewhere else in the page ...
+{!! Multiselect::span( 'colors', $colors, $default_colors, [], false) !!}
+```
+
+Notice that you must pass the exact same arguments as `$list` and `$selected` for both functions.
+
+(2) When a value passed as default to the `span` function is not found in the `$list` argument, the function generates
+an element with "Undefined" as label. You can change this behavior to throwing and exception using the last argument
+of the `span` function (strict mode).
+
+(3) Unlike in LaravelCollective's select, a placeholder option is always generated. You can customize its label using
+
+```php
+{!! Multiselect::select( 
+    'colors', 
+    $colors, 
+    $default_colors, 
+    ['placeholder' => 'Pick your favorite colors']
+) !!}
 ```
 
 ## Change log

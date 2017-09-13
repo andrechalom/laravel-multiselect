@@ -14,6 +14,7 @@ namespace AndreChalom\LaravelMultiselect\Test;
 use AndreChalom\LaravelMultiselect\Multiselect;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Http\Request;
+use AndreChalom\LaravelMultiselect\MultiselectException;
 
 class MultiselectTest extends TestCase
 {
@@ -25,7 +26,6 @@ class MultiselectTest extends TestCase
 
     /////////////////////////////////////////////
     //  Tests for generating the span element  //
-    // Tests for generating the select element //
     /////////////////////////////////////////////
     public function testSpanEmpty()
     {
@@ -46,6 +46,20 @@ class MultiselectTest extends TestCase
         $select = new Multiselect();
         $element = $select->span('name', $this->basicList, [0])->toHtml();
         $this->assertSame('<span id="name-span"><span onClick="$(this).remove();" class="multiselector"><input type="hidden" name="name[]" value="0">Zero</span></span>', $element);
+    }
+
+    public function testSpanUndefined()
+    {
+        $select = new Multiselect();
+        $element = $select->span('name', $this->basicList, [999])->toHtml();
+        $this->assertSame('<span id="name-span"><span onClick="$(this).remove();" class="multiselector"><input type="hidden" name="name[]" value="999">Undefined</span></span>', $element);
+    }
+
+    public function testSpanStrict()
+    {
+        $this->expectException(MultiselectException::class);
+        $select = new Multiselect();
+        $element = $select->span('name', $this->basicList, [-1], [], true)->toHtml();
     }
 
     public function testSpanFromRequest()
@@ -90,5 +104,12 @@ class MultiselectTest extends TestCase
         $select = new Multiselect();
         $element = $select->select('name')->toHtml();
         $this->assertSame('<span id="name-span"></span><select id="name-ms" class="multiselect"><option value="">&nbsp;</option></select>', $element);
+    }
+
+    public function testSelectWithPlaceholder()
+    {
+        $select = new Multiselect();
+        $element = $select->select('name', [], [], ['placeholder' => 'placeholder-text'], [], [], true)->toHtml();
+        $this->assertSame('<select id="name-ms" class="multiselect"><option value="">placeholder-text</option></select>', $element);
     }
 }
