@@ -21,7 +21,7 @@ This package adheres to [PSR 1, 2 and 4](http://www.php-fig.org/psr/).
 
 ## Install
 
-Via Composer (when on Packagist)
+Via Composer
 
 ``` bash
 $ composer require andrechalom/laravel-multiselect
