@@ -44,6 +44,14 @@
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "AndreChalom\\LaravelMultiselect\\MultiselectServiceProvider"
+            ],
+            "aliases": {
+                "Facade": "AndreChalom\\LaravelMultiselect\\MultiselectFacade"
+            }
         }
     },
     "config": {
