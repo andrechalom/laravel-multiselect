@@ -50,7 +50,7 @@
                 "AndreChalom\\LaravelMultiselect\\MultiselectServiceProvider"
             ],
             "aliases": {
-                "Facade": "AndreChalom\\LaravelMultiselect\\MultiselectFacade"
+                "Multiselect": "AndreChalom\\LaravelMultiselect\\MultiselectFacade"
             }
         }
     },
