@@ -219,7 +219,7 @@ class Multiselect
         $selected = $this->getValueArray($name, $default);
         foreach ($selected as $value) {
             // This block avoids Undefined Offsets
-            if (isset($list[$value])) {
+            if (array_key_exists($value, $list)) {
                 $html[] = $this->spanElement($name, $list[$value], $value);
             } else { // Undefined offset! What to do now depends on the value of parameter $strict
                 if ($strict) {
