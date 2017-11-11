@@ -30,7 +30,6 @@ $ composer require andrechalom/laravel-multiselect
 ### Service Provider & Facade
 
 Register provider and facade on your config/app.php file. This is necessary for Laravel 5.4, but optional for >= 5.5.
-(NOTE: see issue #4!)
 
 ```php
 'providers' => [
