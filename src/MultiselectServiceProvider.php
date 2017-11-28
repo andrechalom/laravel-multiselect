@@ -22,8 +22,6 @@ class MultiselectServiceProvider extends ServiceProvider
 
     /**
      * Register the package services.
-     *
-     * @return void
      */
     public function register()
     {

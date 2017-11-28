@@ -8,6 +8,7 @@ This file will keep a small log of changes to this package. This project adheres
 - Fixes erroneous jQuery selector
 - Wraps jQuery code in a $(document).ready() call
 - Fixes tests
+- More strict php-cs-fixer rules
 
 ## [0.1.0] - 2017-11-28
 

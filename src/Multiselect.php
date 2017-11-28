@@ -21,7 +21,7 @@ class Multiselect
     protected $request;
 
     /**
-     * Create a new Multiselect instance. This method expects both a session and a request arguments, in order to be able to look up "old" values
+     * Create a new Multiselect instance. This method expects both a session and a request arguments, in order to be able to look up "old" values.
      */
     public function __construct(Session $session = null, Request $request = null)
     {
@@ -33,10 +33,10 @@ class Multiselect
      * 1 - "old" session values
      * 2 - $request values
      * 3 - default values, passed as $selected
-     * 4 - empty array
+     * 4 - empty array.
      *
      * @param string $key
-     * @param array $value
+     * @param array  $value
      *
      * @return array
      */
@@ -60,12 +60,12 @@ class Multiselect
 
     public function oldInputIsEmpty()
     {
-        return (is_null($this->session) or count($this->session->getOldInput()) == 0);
+        return is_null($this->session) or count($this->session->getOldInput()) == 0;
     }
 
     /**
      * Build a single attribute element.
-     * Cloned from LaravelCollective\html
+     * Cloned from LaravelCollective\html.
      *
      * @param string $key
      * @param string $value
@@ -86,34 +86,34 @@ class Multiselect
         if (is_bool($value) && $key != 'value') {
             return $value ? $key : '';
         }
-        if (! is_null($value)) {
-            return $key . '="' . e($value) . '"';
+        if (!is_null($value)) {
+            return $key.'="'.e($value).'"';
         }
     }
 
-  /**
-   * Build an HTML attribute string from an array.
-   * Cloned from LaravelCollective\html
-   *
-   * @param array $attributes
-   *
-   * @return string
-   */
+    /**
+     * Build an HTML attribute string from an array.
+     * Cloned from LaravelCollective\html.
+     *
+     * @param array $attributes
+     *
+     * @return string
+     */
     protected function attributes($attributes)
     {
         $html = [];
         foreach ((array) $attributes as $key => $value) {
             $element = $this->attributeElement($key, $value);
-            if (! is_null($element)) {
+            if (!is_null($element)) {
                 $html[] = $element;
             }
         }
 
-        return count($html) > 0 ? ' ' . implode(' ', $html) : '';
+        return count($html) > 0 ? ' '.implode(' ', $html) : '';
     }
 
-     /**
-     * Transform the string to an Html serializable object
+    /**
+     * Transform the string to an Html serializable object.
      *
      * @param $html
      *
@@ -125,31 +125,31 @@ class Multiselect
     }
 
     /**
-     * Generates a single option for the select dropdown
+     * Generates a single option for the select dropdown.
      *
      * @param string $display
      * @param string $value
-     * @param array $attributes
+     * @param array  $attributes
      *
      * @return \Illuminate\Support\HtmlString
      * */
     protected function option($display, $value, array $attributes = [])
     {
-        $options = ['value' => $value ] + $attributes;
+        $options = ['value' => $value] + $attributes;
 
-        return $this->toHtmlString('<option' . $this->attributes($options) . '>' . e($display) . '</option>');
+        return $this->toHtmlString('<option'.$this->attributes($options).'>'.e($display).'</option>');
     }
 
     /**
      * Create the multi-select autocomplete field and optionally the already selected span field.
      * This method interface mimicks LaravelCollective\html select method.
      *
-     * @param  string  $name The name of the select element. Will be used by the JS to add hidden inputs
-     * @param  array   $list A Laravel collection or list of key => values
-     * @param  array   $selected A laravel collection or list of keys
-     * @param  array   $inputAttributes
-     * @param  array   $spanAttributes
-     * @param  boolean $inputOnly
+     * @param string $name            The name of the select element. Will be used by the JS to add hidden inputs
+     * @param array  $list            A Laravel collection or list of key => values
+     * @param array  $selected        A laravel collection or list of keys
+     * @param array  $inputAttributes
+     * @param array  $spanAttributes
+     * @param bool   $inputOnly
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -162,26 +162,26 @@ class Multiselect
         $inputOnly = false
     ) {
         // Forces the ID attribute
-        $inputAttributes['id'] = $name . "-ms";
+        $inputAttributes['id'] = $name.'-ms';
         if (!isset($inputAttributes['class'])) {
-            $inputAttributes['class'] = "multiselect";
+            $inputAttributes['class'] = 'multiselect';
         }
 
         // We will concatenate the span html unless $selectOnly is passed as false
-        $spanHtml = $inputOnly ? "" : $this->span($name, $list, $selected, $spanAttributes);
+        $spanHtml = $inputOnly ? '' : $this->span($name, $list, $selected, $spanAttributes);
 
         $inputAttributes = $this->attributes($inputAttributes);
 
-        return $this->toHtmlString($spanHtml . "<input type=\"text\"{$inputAttributes}>");
+        return $this->toHtmlString($spanHtml."<input type=\"text\"{$inputAttributes}>");
     }
 
     /**
      * Create the javaScript scripts required for the multi-select autocomplete plugin.
-     * Notice that this should be called *after* jQuery has been imported
+     * Notice that this should be called *after* jQuery has been imported.
      *
-     * @param  string  $name The name of the select element.
-     * @param  string  $url The URL to be used for getting the autocomplete responses
-     * @param  array   $params Further parameters to be passed to devbridgeAutocomplete
+     * @param string $name   the name of the select element
+     * @param string $url    The URL to be used for getting the autocomplete responses
+     * @param array  $params Further parameters to be passed to devbridgeAutocomplete
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -190,14 +190,14 @@ class Multiselect
         $url,
         array $params = []
     ) {
-        $inputName = $name . "-ms";
+        $inputName = $name.'-ms';
 
         return $this->toHtmlString(
-            '<script>$(document).ready(function() {' .
-            '$("#' . $inputName. '").lmsAutocomplete("' .
-            $url . '", ' .
-            json_encode($params, JSON_FORCE_OBJECT) .
-            ');' .
+            '<script>$(document).ready(function() {'.
+            '$("#'.$inputName.'").lmsAutocomplete("'.
+            $url.'", '.
+            json_encode($params, JSON_FORCE_OBJECT).
+            ');'.
             '});</script>');
     }
 
@@ -205,13 +205,13 @@ class Multiselect
      * Create the multi-select select box field and optionally the already selected span field.
      * This method interface mimicks LaravelCollective\html select method.
      *
-     * @param  string  $name The name of the select element. Will be used by the JS to add hidden inputs
-     * @param  array   $list A Laravel collection or list of key => values
-     * @param  array   $selected A laravel collection or list of keys
-     * @param  array   $selectAttributes
-     * @param  array   $optionsAttributes
-     * @param  array   $spanAttributes
-     * @param  boolean $selectOnly
+     * @param string $name              The name of the select element. Will be used by the JS to add hidden inputs
+     * @param array  $list              A Laravel collection or list of key => values
+     * @param array  $selected          A laravel collection or list of keys
+     * @param array  $selectAttributes
+     * @param array  $optionsAttributes
+     * @param array  $spanAttributes
+     * @param bool   $selectOnly
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -225,13 +225,13 @@ class Multiselect
         $selectOnly = false
     ) {
         // Forces the ID attribute
-        $selectAttributes['id'] = $name . "-ms";
+        $selectAttributes['id'] = $name.'-ms';
         if (!isset($selectAttributes['class'])) {
-            $selectAttributes['class'] = "multiselect";
+            $selectAttributes['class'] = 'multiselect';
         }
 
         // We will concatenate the span html unless $selectOnly is passed as false
-        $spanHtml = $selectOnly ? "" : $this->span($name, $list, $selected, $spanAttributes);
+        $spanHtml = $selectOnly ? '' : $this->span($name, $list, $selected, $spanAttributes);
 
         // Here, we generate the list of options
         $html = [];
@@ -249,7 +249,7 @@ class Multiselect
 
         $selectAttributes = $this->attributes($selectAttributes);
 
-        return $this->toHtmlString($spanHtml . "<select{$selectAttributes}>{$list}</select>");
+        return $this->toHtmlString($spanHtml."<select{$selectAttributes}>{$list}</select>");
     }
 
     /**
@@ -257,11 +257,11 @@ class Multiselect
      * This method is called from Multiselect::select by default, but you may wish to call it elsewhere in your html.
      * If you call it explicitly, remember to pass $selectOnly = false to the select Multiselect::select method.
      *
-     * @param  string $name The name of the select element. Will be used by the JS to add elements under this
-     * @param  array  $list A Laravel collection or list of elements
-     * @param  array  $default A laravel collection or list of elements
-     * @param  array  $spanAttributes
-     * @param  bool   $strict If true, will throw a Undefined Offset exception in case a value in $default is not present in $list. If false, the item is generated with an "Undefined" label
+     * @param string $name           The name of the select element. Will be used by the JS to add elements under this
+     * @param array  $list           A Laravel collection or list of elements
+     * @param array  $default        A laravel collection or list of elements
+     * @param array  $spanAttributes
+     * @param bool   $strict         If true, will throw a Undefined Offset exception in case a value in $default is not present in $list. If false, the item is generated with an "Undefined" label
      *
      * @return \Illuminate\Support\HtmlString
      */
@@ -273,7 +273,7 @@ class Multiselect
         $strict = false
     ) {
         // Forces the ID attribute
-        $spanAttributes['id'] = $name . "-span";
+        $spanAttributes['id'] = $name.'-span';
 
         // Here, we generate the list of already selected options considering "old" values
         $html = [];
@@ -286,7 +286,7 @@ class Multiselect
                 if ($strict) {
                     throw new MultiselectException("Undefined offset $value!");
                 } else {
-                    $html[] = $this->spanElement($name, "Undefined", $value);
+                    $html[] = $this->spanElement($name, 'Undefined', $value);
                 }
             }
         }
@@ -298,7 +298,7 @@ class Multiselect
     }
 
     /**
-     * Generates a single span with pre-selected options with relevant options
+     * Generates a single span with pre-selected options with relevant options.
      *
      * @param string $name
      * @param string $display
@@ -308,12 +308,12 @@ class Multiselect
      * */
     public function spanElement($name, $display, $value)
     {
-        $options = ['onClick' => '$(this).remove();', 'class' => 'multiselector' ];
+        $options = ['onClick' => '$(this).remove();', 'class' => 'multiselector'];
 
         return $this->toHtmlString(
-            '<span' . $this->attributes($options) . '>'.
-            '<input type="hidden" name="' . $name . '[]" value="' . $value . '">'
-            . e($display) .
+            '<span'.$this->attributes($options).'>'.
+            '<input type="hidden" name="'.$name.'[]" value="'.$value.'">'
+            .e($display).
             '</span>');
     }
 }

@@ -65,7 +65,7 @@ class MultiselectTest extends TestCase
     public function testSpanFromRequest()
     {
         $request = Request::create('/foo', 'GET', [
-            "multiselect" => [0, 1],
+            'multiselect' => [0, 1],
         ]);
         $request = Request::createFromBase($request);
         $select = new Multiselect(null, $request);
