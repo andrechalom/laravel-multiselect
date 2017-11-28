@@ -141,6 +141,65 @@ class Multiselect
     }
 
     /**
+     * Create the multi-select autocomplete field and optionally the already selected span field.
+     * This method interface mimicks LaravelCollective\html select method.
+     *
+     * @param  string  $name The name of the select element. Will be used by the JS to add hidden inputs
+     * @param  array   $list A Laravel collection or list of key => values
+     * @param  array   $selected A laravel collection or list of keys
+     * @param  array   $inputAttributes
+     * @param  array   $spanAttributes
+     * @param  boolean $inputOnly
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function autocomplete(
+        $name,
+        $list = [],
+        $selected = [],
+        array $inputAttributes = [],
+        array $spanAttributes = [],
+        $inputOnly = false
+    ) {
+        // Forces the ID attribute
+        $inputAttributes['id'] = $name . "-ms";
+        if (!isset($inputAttributes['class'])) {
+            $inputAttributes['class'] = "multiselect";
+        }
+
+        // We will concatenate the span html unless $selectOnly is passed as false
+        $spanHtml = $inputOnly ? "" : $this->span($name, $list, $selected, $spanAttributes);
+
+        $inputAttributes = $this->attributes($inputAttributes);
+
+        return $this->toHtmlString($spanHtml . "<input type=\"text\"{$inputAttributes}>");
+    }
+
+    /**
+     * Create the javaScript scripts required for the multi-select autocomplete plugin.
+     * Notice that this should be called *after* jQuery has been imported
+     *
+     * @param  string  $name The name of the select element.
+     * @param  string  $url The URL to be used for getting the autocomplete responses
+     * @param  array   $params Further parameters to be passed to devbridgeAutocomplete
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function scripts(
+        $name,
+        $url,
+        array $params = []
+    ) {
+        $inputName = $name . "-ms";
+
+        return $this->toHtmlString(
+            '<script>$("' . $inputName. '").lmsAutocomplete("' .
+            $url . '", ' .
+            json_encode($params, true) .
+            ');</script>');
+    }
+
+    /**
      * Create the multi-select select box field and optionally the already selected span field.
      * This method interface mimicks LaravelCollective\html select method.
      *

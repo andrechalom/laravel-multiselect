@@ -47,7 +47,7 @@ Register provider and facade on your config/app.php file. This is necessary for 
 
 The jQuery code required by this package is in the file multiselect.js. If you use Laravel Mix, you can include it
 in your mix.js. Otherwise, copy it to your public folder and source it directly in the app layout. 
-Remember to do it after you include jquery.
+Remember to do it after you include jQuery.
 
 Example:
 
@@ -151,6 +151,11 @@ of the `span` function (strict mode).
     ['placeholder' => 'Pick your favorite colors']
 ) !!}
 ```
+
+(4) You can also use an autocomplete input instead of a select element! To do so, import 
+[devbridge's Autocomplete plugin](https://github.com/devbridge/jQuery-Autocomplete), replace the calls to 
+`Multiselect::select()` to `Multiselect::autocomplete()`, and include a `Multiselect::scripts()` call after
+jQuery is loaded.
 
 ## Change log
 

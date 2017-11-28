@@ -112,4 +112,31 @@ class MultiselectTest extends TestCase
         $element = $select->select('name', [], [], ['placeholder' => 'placeholder-text'], [], [], true)->toHtml();
         $this->assertSame('<select id="name-ms" class="multiselect"><option value="">placeholder-text</option></select>', $element);
     }
+
+    /////////////////////////////////////////////////
+    // Tests for generating the autocomplete input //
+    /////////////////////////////////////////////////
+    public function testInputEmpty()
+    {
+        $select = new Multiselect();
+        $element = $select->autocomplete('name', [], [], [], [], true)->toHtml();
+        $this->assertSame('<input type="text" id="name-ms" class="multiselect">', $element);
+    }
+
+    ///////////////////////////////////////////////////
+    // Tests for generating the autocomplete scripts //
+    ///////////////////////////////////////////////////
+    public function testScriptsSimple()
+    {
+        $select = new Multiselect();
+        $element = $select->scripts('name', 'http://url/', [])->toHtml();
+        $this->assertSame('<script>$("name-ms").lmsAutocomplete("http://url/", []);</script>', $element);
+    }
+
+    public function testScriptsParams()
+    {
+        $select = new Multiselect();
+        $element = $select->scripts('name', 'http://url/', ['minChars' => 5, 'showNoSuggestionNotice' => true])->toHtml();
+        $this->assertSame('<script>$("name-ms").lmsAutocomplete("http://url/", {"minChars":5,"showNoSuggestionNotice":true});</script>', $element);
+    }
 }
