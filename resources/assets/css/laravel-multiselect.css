@@ -1,0 +1,32 @@
+.minispinner {
+    border-top: 3px solid #3097D1;
+    border-bottom: 3px solid #3097D1;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+    animation: spin 2s ease-in-out infinite;
+    position: relative;
+    float: right;
+    left: -10px;
+    top: -24px;
+    display: block;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Used for multiselectors span elements */
+.multiselector { display: inline-block; border: 1px dashed; padding: 2px; margin: 5px; cursor: pointer; }
+.multiselector:after { font-family: "Glyphicons Halflings"; content: "\e014"; padding-left: 3px; }
+
+/* Used by autocomplete plugin */
+.autocomplete-suggestions { border: 1px solid #999; background: #FFF; overflow: auto; }
+.autocomplete-suggestion { padding: 2px 5px; overflow: hidden; cursor: pointer; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
+input.multiselect { border: 1px solid #5555FF; }

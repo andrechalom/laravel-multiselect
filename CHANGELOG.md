@@ -2,6 +2,11 @@
 
 This file will keep a small log of changes to this package. This project adheres to Semantic Versioning.
 
+## [0.1.0] - 2017-11-28
+
+- Adds integration with devbridge's Autocomplete plugin
+- Fixes the integration with Laravel 5.5
+
 ## [0.0.3] - 2017-09-13
 
 - Fixes a bug that caused an exception when the "old" value for the Multiselect was null
@@ -13,4 +18,5 @@ This file will keep a small log of changes to this package. This project adheres
 - Several clarifications to the README.
 
 ## [0.0.1] - 2017-09-06
-First draft of the package.
+
+- First draft of the package.

@@ -107,6 +107,9 @@ public function update(Request $request, $id) {
 .multiselector:after { font-family: "Glyphicons Halflings"; content: "\e014"; padding-left: 3px; }
 ```
 
+A css file is included in this package source code, and includes the above, plus all of the elements that should
+be styled when using this package.
+
 If would like to change the class or other HTML attributes of the select, option or span elements generated, use the
 following arguments:
 
