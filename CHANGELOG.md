@@ -2,6 +2,13 @@
 
 This file will keep a small log of changes to this package. This project adheres to Semantic Versioning.
 
+## [0.1.1] - 2017-11-28
+
+- Fixes erroneous call to json\_encode
+- Fixes erroneous jQuery selector
+- Wraps jQuery code in a $(document).ready() call
+- Fixes tests
+
 ## [0.1.0] - 2017-11-28
 
 - Adds integration with devbridge's Autocomplete plugin

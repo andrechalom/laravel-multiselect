@@ -193,10 +193,12 @@ class Multiselect
         $inputName = $name . "-ms";
 
         return $this->toHtmlString(
-            '<script>$("' . $inputName. '").lmsAutocomplete("' .
+            '<script>$(document).ready(function() {' .
+            '$("#' . $inputName. '").lmsAutocomplete("' .
             $url . '", ' .
-            json_encode($params, true) .
-            ');</script>');
+            json_encode($params, JSON_FORCE_OBJECT) .
+            ');' .
+            '});</script>');
     }
 
     /**

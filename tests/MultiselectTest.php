@@ -130,13 +130,13 @@ class MultiselectTest extends TestCase
     {
         $select = new Multiselect();
         $element = $select->scripts('name', 'http://url/', [])->toHtml();
-        $this->assertSame('<script>$("name-ms").lmsAutocomplete("http://url/", []);</script>', $element);
+        $this->assertSame('<script>$(document).ready(function() {$("#name-ms").lmsAutocomplete("http://url/", {});});</script>', $element);
     }
 
     public function testScriptsParams()
     {
         $select = new Multiselect();
         $element = $select->scripts('name', 'http://url/', ['minChars' => 5, 'showNoSuggestionNotice' => true])->toHtml();
-        $this->assertSame('<script>$("name-ms").lmsAutocomplete("http://url/", {"minChars":5,"showNoSuggestionNotice":true});</script>', $element);
+        $this->assertSame('<script>$(document).ready(function() {$("#name-ms").lmsAutocomplete("http://url/", {"minChars":5,"showNoSuggestionNotice":true});});</script>', $element);
     }
 }
