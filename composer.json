@@ -9,7 +9,7 @@
         "multiple"
     ],
     "homepage": "https://github.com/andrechalom/laravel-multiselect",
-    "license": "GPLv3",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Andre Chalom",
