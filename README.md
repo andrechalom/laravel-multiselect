@@ -15,8 +15,8 @@ This package adheres to [PSR 1, 2 and 4](http://www.php-fig.org/psr/).
 
 ## Requirements
 
-- [PHP > 5.6](http://php.net)
-- [Laravel 5.4|5.5](https://github.com/laravel/framework)
+- [PHP > 7.0](http://php.net)
+- [Laravel > 5.1](https://github.com/laravel/framework) (Tested on 5.4 and 8.8)
 - [jQuery > 2.0?](http://jquery.com)
 
 ## Install

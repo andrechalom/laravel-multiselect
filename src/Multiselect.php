@@ -11,9 +11,9 @@
 
 namespace AndreChalom\LaravelMultiselect;
 
-use Illuminate\Support\HtmlString;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Http\Request;
+use Illuminate\Support\HtmlString;
 
 class Multiselect
 {
@@ -60,7 +60,7 @@ class Multiselect
 
     public function oldInputIsEmpty()
     {
-        return is_null($this->session) or count($this->session->getOldInput()) == 0;
+        return is_null($this->session) or 0 == count($this->session->getOldInput());
     }
 
     /**
@@ -83,7 +83,7 @@ class Multiselect
             return $value;
         }
         // Treat boolean attributes as HTML properties
-        if (is_bool($value) && $key != 'value') {
+        if (is_bool($value) && 'value' != $key) {
             return $value ? $key : '';
         }
         if (!is_null($value)) {
@@ -129,7 +129,6 @@ class Multiselect
      *
      * @param string $display
      * @param string $value
-     * @param array  $attributes
      *
      * @return \Illuminate\Support\HtmlString
      * */
@@ -144,11 +143,9 @@ class Multiselect
      * Create the multi-select autocomplete field and optionally the already selected span field.
      * This method interface mimicks LaravelCollective\html select method.
      *
-     * @param string $name            The name of the select element. Will be used by the JS to add hidden inputs
-     * @param array  $list            A Laravel collection or list of key => values
-     * @param array  $selected        A laravel collection or list of keys
-     * @param array  $inputAttributes
-     * @param array  $spanAttributes
+     * @param string $name      The name of the select element. Will be used by the JS to add hidden inputs
+     * @param array  $list      A Laravel collection or list of key => values
+     * @param array  $selected  A laravel collection or list of keys
      * @param bool   $inputOnly
      *
      * @return \Illuminate\Support\HtmlString
@@ -205,12 +202,9 @@ class Multiselect
      * Create the multi-select select box field and optionally the already selected span field.
      * This method interface mimicks LaravelCollective\html select method.
      *
-     * @param string $name              The name of the select element. Will be used by the JS to add hidden inputs
-     * @param array  $list              A Laravel collection or list of key => values
-     * @param array  $selected          A laravel collection or list of keys
-     * @param array  $selectAttributes
-     * @param array  $optionsAttributes
-     * @param array  $spanAttributes
+     * @param string $name       The name of the select element. Will be used by the JS to add hidden inputs
+     * @param array  $list       A Laravel collection or list of key => values
+     * @param array  $selected   A laravel collection or list of keys
      * @param bool   $selectOnly
      *
      * @return \Illuminate\Support\HtmlString
@@ -239,7 +233,7 @@ class Multiselect
             $html[] = $this->option($selectAttributes['placeholder'], '');
             unset($selectAttributes['placeholder']);
         } else {
-            $html[] = $this->option('&nbsp;', '');
+            $html[] = $this->option('', '');
         }
         foreach ($list as $value => $display) {
             $optionAttributes = isset($optionsAttributes[$value]) ? $optionsAttributes[$value] : [];
@@ -257,11 +251,10 @@ class Multiselect
      * This method is called from Multiselect::select by default, but you may wish to call it elsewhere in your html.
      * If you call it explicitly, remember to pass $selectOnly = false to the select Multiselect::select method.
      *
-     * @param string $name           The name of the select element. Will be used by the JS to add elements under this
-     * @param array  $list           A Laravel collection or list of elements
-     * @param array  $default        A laravel collection or list of elements
-     * @param array  $spanAttributes
-     * @param bool   $strict         If true, will throw a Undefined Offset exception in case a value in $default is not present in $list. If false, the item is generated with an "Undefined" label
+     * @param string $name    The name of the select element. Will be used by the JS to add elements under this
+     * @param array  $list    A Laravel collection or list of elements
+     * @param array  $default A laravel collection or list of elements
+     * @param bool   $strict  If true, will throw a Undefined Offset exception in case a value in $default is not present in $list. If false, the item is generated with an "Undefined" label
      *
      * @return \Illuminate\Support\HtmlString
      */

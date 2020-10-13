@@ -3,3 +3,4 @@ vendor/
 *.swp
 composer.lock
 cloverfile.xml
+.phpunit.result.cache
