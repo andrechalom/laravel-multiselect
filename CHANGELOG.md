@@ -2,7 +2,7 @@
 
 This file will keep a small log of changes to this package. This project adheres to Semantic Versioning.
 
-## [0.2.0] - 2021-??-??
+## [0.2.0] - 2021-10-12
 - Updates composer.json for PHP8 compatibility
 
 ## [0.1.1] - 2017-11-28
