@@ -2,9 +2,6 @@
 
 [![Latest Version on Packagist][ico-version]][link-packagist]
 [![Software License][ico-license]](LICENSE)
-[![Build Status][ico-travis]][link-travis]
-[![Coverage Status][ico-scrutinizer]][link-scrutinizer]
-[![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
 This package provides a quick interface for adding select boxes from which multiple elements may be selected.
@@ -168,6 +165,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 
 ``` bash
 $ docker build --tag multiselect .
+$ docker run -ti multiselect composer fix-style
 $ docker run -ti multiselect composer test
 ```
 
@@ -189,13 +187,7 @@ This work is licensed under the GNU Public License. Please see [License File](LI
 
 [ico-version]: https://img.shields.io/packagist/v/andrechalom/laravel-multiselect.svg
 [ico-license]: https://img.shields.io/badge/license-GPLv3-brightgreen.svg
-[ico-travis]: https://img.shields.io/travis/andrechalom/laravel-multiselect/master.svg
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/andrechalom/laravel-multiselect.svg
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/andrechalom/laravel-multiselect.svg
 [ico-downloads]: https://img.shields.io/packagist/dt/andrechalom/laravel-multiselect.svg
 
 [link-packagist]: https://packagist.org/packages/andrechalom/laravel-multiselect
-[link-travis]: https://travis-ci.org/andrechalom/laravel-multiselect
-[link-scrutinizer]: https://scrutinizer-ci.com/g/andrechalom/laravel-multiselect/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/andrechalom/laravel-multiselect
 [link-downloads]: https://packagist.org/packages/andrechalom/laravel-multiselect
