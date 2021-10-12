@@ -2,6 +2,9 @@
 
 This file will keep a small log of changes to this package. This project adheres to Semantic Versioning.
 
+## [0.2.0] - 2021-??-??
+- Updates composer.json for PHP8 compatibility
+
 ## [0.1.1] - 2017-11-28
 
 - Fixes erroneous call to json\_encode

@@ -167,7 +167,8 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Testing
 
 ``` bash
-$ composer test
+$ docker build --tag multiselect .
+$ docker run -ti multiselect composer test
 ```
 
 ## Contributing
